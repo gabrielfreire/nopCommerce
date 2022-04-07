@@ -1,4 +1,5 @@
 ﻿@model TopicModel
+
 @if (Model.IsPasswordProtected)
 {
     <script asp-location="Footer">
@@ -27,9 +28,10 @@
                             $('#ph-topic-@Model.Id').show();
                             //we need to re-run the validation plugin after the content is loaded after successful authentication
                             $.validator.unobtrusive.parse('#ph-topic-@Model.Id');
-                        } else {
-                            $('#password-error-@Model.Id').text(data.Error).fadeIn("slow");
-                            $('#ph-password-@Model.Id #password-@Model.Id').select().focus();
+                            }
+                            else {
+                                $('#password-error-@Model.Id').text(data.Error).fadeIn("slow");
+                                $('#ph-password-@Model.Id #password-@Model.Id').select().focus();
                         }
                     }
                 });
@@ -37,14 +39,14 @@
             });
         });
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#ph-topic-@Model.Id').hide();
             $('#ph-password-@Model.Id #password-@Model.Id').select().focus();
         });
     </script>
     <div class="topic-password" id="ph-password-@Model.Id">
         <form asp-route="TopicAuthenticate" method="post" autocomplete="off">
-            <input asp-for="Id" id="topic-@Model.Id" type="hidden"/>
+            <input asp-for="Id" id="topic-@Model.Id" type="hidden" />
             <div class="enter-password-title">
                 @T("Topic.EnterPassword")
             </div>
@@ -55,26 +57,32 @@
             <div class="password-error" id="password-error-@Model.Id" style="display: none;"></div>
         </form>
     </div>
-    <div class="topic-block" id="ph-topic-@Model.Id">
-        <div class="topic-block-title" id="ph-title-@Model.Id">
-            <h2>@Model.Title</h2>
+    <div class="topic-html-content" id="ph-topic-@Model.Id">
+        <div id="ph-title-@Model.Id">
+            <div class="topic-html-content-title">
+                <h2 class="topic-html-content-header">
+                    @Model.Title</h2>
+            </div>
         </div>
-        <div class="topic-block-body">
+        <div class="topic-html-content-body">
             @Html.Raw(Model.Body)
         </div>
     </div>
 }
 else
 {
-    <div class="topic-block">
+    <div class="topic-html-content">
         @if (!string.IsNullOrEmpty(Model.Title))
         {
-            <div class="topic-block-title">
-                <h2>@Model.Title</h2>
+            <div class="topic-html-content-title panel-heading">
+                <h1>
+                    @Model.Title
+                </h1>
             </div>
         }
-        <div class="topic-block-body">
+        <div class="topic-html-content-body">
             @Html.Raw(Model.Body)
         </div>
     </div>
+  
 }

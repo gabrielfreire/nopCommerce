@@ -217,6 +217,7 @@
     <script asp-location="Footer">
         Accordion.init('checkout-steps', '.step-title', true);
         Accordion.openSection('#opc-billing');
+
         Checkout.init('@(storeLocation)cart/');
         if (Billing.disableBillingAddressCheckoutStep)
         {
