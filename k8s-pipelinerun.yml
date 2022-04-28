@@ -8,24 +8,38 @@ spec:
   params:
   - name: git_url
     value: https://github.com/gabrielfreire/nopCommerce
+
   - name: imageTag
     value: "latest"
+
   - name: imageUrl
     value: gabrielfreiredev/nopcommerce
+
   - name: dockerfile
     value: Dockerfile
+
   - name: dockerfileContext
     value: ./
+
+  - name: kubernetesDir
+    value: ./k8s-deploy.yml
+
+  - name: kubernetesDeployment
+    value: nopcommerce
+
+  - name: kubernetesNamespace
+    value: nopcommerce
+
   pipelineRef:
     name: cicd-pipeline
   workspaces:
+
   - name: cicd-ws
     persistentVolumeClaim:
       claimName: tekton-pvc
+
   - name: docker-reg-creds
     secret:
       secretName: docker-creds
-  - name: kubeconfig
-    configmap:
-      name: kubeconfig
+
 status: {}

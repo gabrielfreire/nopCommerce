@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: nopcommerce
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nopcommerce-pod
+  namespace: nopcommerce
+  labels:
+    app: nopcommerce-pod
+spec:
+  selector:
+    matchLabels:
+      app: nopcommerce-pod
+  template:
+    metadata:
+      labels:
+        app: nopcommerce-pod
+    spec:
+      containers:
+      - name: nopcommerce
+        image: gabrielfreiredev/nopcommerce:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+      terminationGracePeriodSeconds: 180
+  minReadySeconds: 60
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 0
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nopcommerce-service
+  namespace: nopcommerce
+spec:
+  selector:
+    app: nopcommerce-pod
+  ports:
+  - port: 80
+    name: "http-80"
+    protocol: TCP
+    targetPort: 80
+  type: NodePort
