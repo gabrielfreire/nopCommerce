@@ -1,0 +1,31 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  creationTimestamp: null
+  generateName: nopcommerce-pipeline-run-
+  namespace: default
+spec:
+  params:
+  - name: git_url
+    value: https://github.com/gabrielfreire/nopCommerce
+  - name: imageTag
+    value: "latest"
+  - name: imageUrl
+    value: gabrielfreiredev/nopcommerce
+  - name: dockerfile
+    value: Dockerfile
+  - name: dockerfileContext
+    value: ./
+  pipelineRef:
+    name: cicd-pipeline
+  workspaces:
+  - name: cicd-ws
+    persistentVolumeClaim:
+      claimName: tekton-pvc
+  - name: docker-reg-creds
+    secret:
+      secretName: docker-creds
+  - name: kubeconfig
+    configmap:
+      name: kubeconfig
+status: {}
