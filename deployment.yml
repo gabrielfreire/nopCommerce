@@ -41,8 +41,8 @@ spec:
   selector:
     app: nopcommerce-pod
   ports:
-  - port: 80
-    name: "http-80"
+  - port: 4480
+    name: "http-4480"
     protocol: TCP
     targetPort: 80
-  type: NodePort
+  type: LoadBalancer
