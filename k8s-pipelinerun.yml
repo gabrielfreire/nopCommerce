@@ -27,6 +27,9 @@ spec:
   - name: kubernetesDeployment
     value: nopcommerce
 
+  - name: kubernetesContainer
+    value: nopcommerce
+
   - name: kubernetesNamespace
     value: nopcommerce
 
