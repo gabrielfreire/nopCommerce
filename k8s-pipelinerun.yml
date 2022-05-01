@@ -7,7 +7,7 @@ metadata:
 spec:
   params:
   - name: git_url
-    value: https://github.com/gabrielfreire/nopCommerce
+    value: git@github.com:gabrielfreire/nopCommerce.git
 
   - name: imageTag
     value: "latest"
@@ -22,13 +22,15 @@ spec:
     value: ./
 
   - name: kubernetesDir
-    value: ./k8s-deploy.yml
+    value: ./deployment.yml
 
   - name: kubernetesDeployment
     value: nopcommerce
 
   - name: kubernetesNamespace
     value: nopcommerce
+
+  serviceAccountName: build-bot
 
   pipelineRef:
     name: cicd-pipeline
@@ -41,5 +43,7 @@ spec:
   - name: docker-reg-creds
     secret:
       secretName: docker-creds
-
-status: {}
+  
+  - name: github-creds
+    secret:
+      secretName: github-secret-ssh
