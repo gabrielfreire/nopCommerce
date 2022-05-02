@@ -63,7 +63,7 @@ WORKDIR /src/Presentation/Nop.Web
 RUN dotnet publish Nop.Web.csproj -c Release -r linux-arm64 -o /app/published
 
 # create the runtime instance 
-FROM mcr.microsoft.com/dotnet/aspnet:6.0-focal-arm64v8 AS runtime 
+FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine3.15-arm64v8 AS runtime 
 
 # add globalization support
 RUN apk add --no-cache icu-libs
