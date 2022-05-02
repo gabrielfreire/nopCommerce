@@ -16,7 +16,7 @@ spec:
     value: gabrielfreiredev/nopcommerce-arm
 
   - name: dockerfile
-    value: Dockerfile_arm
+    value: Dockerfile-arm
 
   - name: dockerfileContext
     value: ./
