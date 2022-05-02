@@ -8,6 +8,9 @@ spec:
   params:
   - name: git_url
     value: git@github.com:gabrielfreire/nopCommerce.git
+  
+  - name: git_revision
+    value: master
 
   - name: imageTag
     value: "latest"
