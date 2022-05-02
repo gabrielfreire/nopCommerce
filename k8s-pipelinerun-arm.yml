@@ -1,0 +1,52 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  creationTimestamp: null
+  generateName: nopcommerce-arm-pipeline-run-
+  namespace: default
+spec:
+  params:
+  - name: git_url
+    value: git@github.com:gabrielfreire/nopCommerce.git
+
+  - name: imageTag
+    value: "latest"
+
+  - name: imageUrl
+    value: gabrielfreiredev/nopcommerce-arm
+
+  - name: dockerfile
+    value: Dockerfile_arm
+
+  - name: dockerfileContext
+    value: ./
+
+  - name: kubernetesDir
+    value: ./deployment.yml
+
+  - name: kubernetesDeployment
+    value: nopcommerce
+
+  - name: kubernetesContainer
+    value: nopcommerce
+
+  - name: kubernetesNamespace
+    value: nopcommerce
+
+  serviceAccountName: build-bot
+
+  pipelineRef:
+    name: cicd-pipeline
+  workspaces:
+
+  - name: cicd-ws
+    persistentVolumeClaim:
+      claimName: tekton-pvc
+
+  - name: docker-reg-creds
+    secret:
+      secretName: docker-creds
+  
+  - name: github-creds
+    secret:
+      secretName: github-secret-ssh
