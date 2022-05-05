@@ -1,5 +1,5 @@
 # create the build instance 
-FROM gabrielfreiredev/smartplatform_base-arm:latest AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine3.15-arm64v8 AS build
 
 WORKDIR /src                                                                    
 COPY ./src ./
