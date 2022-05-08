@@ -56,8 +56,9 @@ spec:
         image: gabrielfreiredev/nopcommerce:latest
         imagePullPolicy: Always
         volumeMounts:
-        - mountPath: /app/App_Data
-          name: nopcommerce
+        - name: nopcommerce
+          mountPath: /app/App_Data/appsettings.json
+          subPath: appsettings.json
         ports:
         - containerPort: 80
       terminationGracePeriodSeconds: 180
