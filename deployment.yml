@@ -12,11 +12,11 @@ metadata:
 spec:
   storageClassName: manual
   capacity:
-    storage: 20Gi
+    storage: 4Mi
   accessModes:
     - ReadWriteMany
   hostPath:
-    path: "/var/lib/nopCommerce/App_Data"
+    path: "/home/ubuntu/data/nopCommerce/App_Data"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -29,7 +29,7 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: 20Gi
+      storage: 4Mi
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -57,8 +57,7 @@ spec:
         imagePullPolicy: Always
         volumeMounts:
         - name: nopcommerce
-          mountPath: /app/App_Data/appsettings.json
-          subPath: appsettings.json
+          mountPath: /app/App_Data
         ports:
         - containerPort: 80
       terminationGracePeriodSeconds: 180
