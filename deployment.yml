@@ -3,6 +3,34 @@ kind: Namespace
 metadata:
   name: nopcommerce
 ---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: nopcommerce-pv
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/var/lib/nopCommerce/App_Data"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nopcommerce-pvc
+  namespace: nopcommerce
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 20Gi
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -19,14 +47,21 @@ spec:
       labels:
         app: nopcommerce-pod
     spec:
+      volumes:
+      - name: nopcommerce
+        persistentVolumeClaim:
+          claimName: nopcommerce-pvc
       containers:
       - name: nopcommerce
         image: gabrielfreiredev/nopcommerce:latest
         imagePullPolicy: Always
+        volumeMounts:
+        - mountPath: /app/App_Data
+          name: nopcommerce
         ports:
         - containerPort: 80
       terminationGracePeriodSeconds: 180
-  minReadySeconds: 60
+  minReadySeconds: 120
   strategy:
     rollingUpdate:
       maxUnavailable: 1
