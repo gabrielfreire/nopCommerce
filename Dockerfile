@@ -5,24 +5,23 @@ WORKDIR /src
 COPY ./src ./
 
 # restore solution
-# RUN dotnet restore NopCommerce.sln
-
-WORKDIR /src/Presentation/Nop.Web   
+RUN dotnet restore NopCommerce.sln
 
 # build project   
+WORKDIR /src/Presentation/Nop.Web   
 RUN dotnet build Nop.Web.csproj -c Release
 
 # build plugins
-# WORKDIR /src/Plugins/Nop.Plugin.DiscountRules.CustomerRoles
-# RUN dotnet build Nop.Plugin.DiscountRules.CustomerRoles.csproj -c Release
-# WORKDIR /src/Plugins/Nop.Plugin.ExchangeRate.EcbExchange
-# RUN dotnet build Nop.Plugin.ExchangeRate.EcbExchange.csproj -c Release
-# WORKDIR /src/Plugins/Nop.Plugin.ExternalAuth.Facebook
-# RUN dotnet build Nop.Plugin.ExternalAuth.Facebook.csproj -c Release
-# WORKDIR /src/Plugins/Nop.Plugin.Misc.Sendinblue
-# RUN dotnet build Nop.Plugin.Misc.Sendinblue.csproj -c Release
-# WORKDIR /src/Plugins/Nop.Plugin.Misc.WebApi.Frontend
-# RUN dotnet build Nop.Plugin.Misc.WebApi.Frontend.csproj -c Release
+WORKDIR /src/Plugins/Nop.Plugin.DiscountRules.CustomerRoles
+RUN dotnet build Nop.Plugin.DiscountRules.CustomerRoles.csproj -c Release
+WORKDIR /src/Plugins/Nop.Plugin.ExchangeRate.EcbExchange
+RUN dotnet build Nop.Plugin.ExchangeRate.EcbExchange.csproj -c Release
+WORKDIR /src/Plugins/Nop.Plugin.ExternalAuth.Facebook
+RUN dotnet build Nop.Plugin.ExternalAuth.Facebook.csproj -c Release
+WORKDIR /src/Plugins/Nop.Plugin.Misc.Sendinblue
+RUN dotnet build Nop.Plugin.Misc.Sendinblue.csproj -c Release
+WORKDIR /src/Plugins/Nop.Plugin.Misc.WebApi.Frontend
+RUN dotnet build Nop.Plugin.Misc.WebApi.Frontend.csproj -c Release
 # WORKDIR /src/Plugins/Nop.Plugin.MultiFactorAuth.GoogleAuthenticator
 # RUN dotnet build Nop.Plugin.MultiFactorAuth.GoogleAuthenticator.csproj -c Release
 WORKDIR /src/Plugins/Nop.Plugin.Payments.CheckMoneyOrder
@@ -37,42 +36,57 @@ RUN dotnet build Nop.Plugin.Payments.PayPalStandard.csproj -c Release
 # RUN dotnet build Nop.Plugin.Pickup.PickupInStore.csproj -c Release
 # WORKDIR /src/Plugins/Nop.Plugin.Shipping.EasyPost
 # RUN dotnet build Nop.Plugin.Shipping.EasyPost.csproj -c Release
-# WORKDIR /src/Plugins/Nop.Plugin.Shipping.FixedByWeightByTotal
-# RUN dotnet build Nop.Plugin.Shipping.FixedByWeightByTotal.csproj -c Release
-# WORKDIR /src/Plugins/Nop.Plugin.Shipping.ShipStation
-# RUN dotnet build Nop.Plugin.Shipping.ShipStation.csproj -c Release
+WORKDIR /src/Plugins/Nop.Plugin.Shipping.FixedByWeightByTotal
+RUN dotnet build Nop.Plugin.Shipping.FixedByWeightByTotal.csproj -c Release
+WORKDIR /src/Plugins/Nop.Plugin.Shipping.ShipStation
+RUN dotnet build Nop.Plugin.Shipping.ShipStation.csproj -c Release
 # WORKDIR /src/Plugins/Nop.Plugin.Shipping.UPS
 # RUN dotnet build Nop.Plugin.Shipping.UPS.csproj -c Release
-# WORKDIR /src/Plugins/Nop.Plugin.Tax.Avalara
-# RUN dotnet build Nop.Plugin.Tax.Avalara.csproj -c Release
-# WORKDIR /src/Plugins/Nop.Plugin.Tax.FixedOrByCountryStateZip
-# RUN dotnet build Nop.Plugin.Tax.FixedOrByCountryStateZip.csproj -c Release
-# WORKDIR /src/Plugins/Nop.Plugin.Widgets.AccessiBe
-# RUN dotnet build Nop.Plugin.Widgets.AccessiBe.csproj -c Release
-# WORKDIR /src/Plugins/Nop.Plugin.Widgets.FacebookPixel
-# RUN dotnet build Nop.Plugin.Widgets.FacebookPixel.csproj -c Release
-# WORKDIR /src/Plugins/Nop.Plugin.Widgets.GoogleAnalytics
-# RUN dotnet build Nop.Plugin.Widgets.GoogleAnalytics.csproj -c Release
-# WORKDIR /src/Plugins/Nop.Plugin.Widgets.NivoSlider
-# RUN dotnet build Nop.Plugin.Widgets.NivoSlider.csproj -c Release
-# WORKDIR /src/Plugins/Nop.Plugin.Widgets.What3words
-# RUN dotnet build Nop.Plugin.Widgets.What3words.csproj -c Release
+WORKDIR /src/Plugins/Nop.Plugin.Tax.Avalara
+RUN dotnet build Nop.Plugin.Tax.Avalara.csproj -c Release
+WORKDIR /src/Plugins/Nop.Plugin.Tax.FixedOrByCountryStateZip
+RUN dotnet build Nop.Plugin.Tax.FixedOrByCountryStateZip.csproj -c Release
+WORKDIR /src/Plugins/Nop.Plugin.Widgets.AccessiBe
+RUN dotnet build Nop.Plugin.Widgets.AccessiBe.csproj -c Release
+WORKDIR /src/Plugins/Nop.Plugin.Widgets.FacebookPixel
+RUN dotnet build Nop.Plugin.Widgets.FacebookPixel.csproj -c Release
+WORKDIR /src/Plugins/Nop.Plugin.Widgets.GoogleAnalytics
+RUN dotnet build Nop.Plugin.Widgets.GoogleAnalytics.csproj -c Release
+WORKDIR /src/Plugins/Nop.Plugin.Widgets.NivoSlider
+RUN dotnet build Nop.Plugin.Widgets.NivoSlider.csproj -c Release
+WORKDIR /src/Plugins/Nop.Plugin.Widgets.What3words
+RUN dotnet build Nop.Plugin.Widgets.What3words.csproj -c Release
 
 # publish project
 WORKDIR /src/Presentation/Nop.Web   
 RUN dotnet publish Nop.Web.csproj -c Release -o /app/published
 
 # create the runtime instance 
-FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine AS runtime 
+FROM mcr.microsoft.com/dotnet/aspnet:6.0-focal AS runtime 
 
 # add globalization support
-RUN apk add --no-cache icu-libs
+# alpine
+# RUN apk add --no-cache icu-libs
+# ubuntu
+RUN apt clean
+RUN apt-get update -y
+RUN apt-get -y install icu-devtools
+
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 
 # installs required packages
-RUN apk add libgdiplus --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --allow-untrusted
-RUN apk add libc-dev --no-cache
-RUN apk add tzdata --no-cache
+
+# ubuntu
+RUN apt-get install -y libgdiplus
+RUN apt-get install -y linux-libc-dev
+RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC
+RUN apt-get -y install tzdata
+
+# alpine
+# RUN apk add libgdiplus --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --allow-untrusted
+# RUN apk add libc-dev --no-cache
+# RUN apk add tzdata --no-cache
+# RUN apk --no-cache add fontconfig
 
 # copy entrypoint script
 COPY ./entrypoint.sh /entrypoint.sh

@@ -6,7 +6,7 @@ metadata:
 kind: PersistentVolume
 apiVersion: v1
 metadata:
-  name: nopcommerce-pv
+  name: nopcommerce-appdata-pv
   labels:
     type: local
 spec:
@@ -16,12 +16,57 @@ spec:
   accessModes:
     - ReadWriteMany
   hostPath:
-    path: "/home/ubuntu/data/nopCommerce/App_Data"
+    path: "/var/lib/nopCommerce/App_Data"
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: nopcommerce-wwwroot-pv
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 5Mi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/var/lib/nopCommerce/wwwroot"
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: nopcommerce-plugins-pv
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 10Mi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/var/lib/nopCommerce/Plugins"
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: nopcommerce-themes-pv
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 20Mi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/var/lib/nopCommerce/Themes"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: nopcommerce-pvc
+  name: nopcommerce-appdata-pvc
   namespace: nopcommerce
 spec:
   storageClassName: manual
@@ -30,6 +75,45 @@ spec:
   resources:
     requests:
       storage: 4Mi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nopcommerce-wwwroot-pvc
+  namespace: nopcommerce
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Mi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nopcommerce-plugins-pvc
+  namespace: nopcommerce
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Mi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nopcommerce-themes-pvc
+  namespace: nopcommerce
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 20Mi
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -48,16 +132,31 @@ spec:
         app: nopcommerce-pod
     spec:
       volumes:
-      - name: nopcommerce
+      - name: appdata
         persistentVolumeClaim:
-          claimName: nopcommerce-pvc
+          claimName: nopcommerce-appdata-pvc
+      - name: wwwroot
+        persistentVolumeClaim:
+          claimName: nopcommerce-wwwroot-pvc
+      - name: plugins
+        persistentVolumeClaim:
+          claimName: nopcommerce-plugins-pvc
+      - name: themes
+        persistentVolumeClaim:
+          claimName: nopcommerce-themes-pvc
       containers:
       - name: nopcommerce
         image: gabrielfreiredev/nopcommerce:latest
         imagePullPolicy: Always
         volumeMounts:
-        - name: nopcommerce
+        - name: appdata
           mountPath: /app/App_Data
+        - name: wwwroot
+          mountPath: /app/wwwroot
+        - name: plugins
+          mountPath: /app/Plugins
+        - name: themes
+          mountPath: /app/Themes
         ports:
         - containerPort: 80
       terminationGracePeriodSeconds: 180
