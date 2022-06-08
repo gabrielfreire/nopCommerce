@@ -1,0 +1,51 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: boltz-store-vs
+  namespace: nopcommerce
+spec:
+  hosts:
+  - "boltz.lonekings.tk"
+  gateways:
+  - nopcommerce-gateway
+  http:
+  - route:
+    - destination:
+        host: nopcommerce-service.nopcommerce.svc.cluster.local
+        port:
+          number: 4480
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: main-store-vs
+  namespace: nopcommerce
+spec:
+  hosts:
+  - "www.lonekings.tk"
+  - "lonekings.tk"
+  gateways:
+  - nopcommerce-gateway
+  http:
+  - route:
+    - destination:
+        host: nopcommerce-service.nopcommerce.svc.cluster.local
+        port:
+          number: 4480
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: watchsix-store-vs
+  namespace: nopcommerce
+spec:
+  hosts:
+  - "watchsix.lonekings.tk"
+  gateways:
+  - nopcommerce-gateway
+  http:
+  - route:
+    - destination:
+        host: nopcommerce-service.nopcommerce.svc.cluster.local
+        port:
+          number: 4480

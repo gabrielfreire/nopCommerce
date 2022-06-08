@@ -179,4 +179,4 @@ spec:
     name: "http-4480"
     protocol: TCP
     targetPort: 80
-  type: LoadBalancer
+  type: NodePort

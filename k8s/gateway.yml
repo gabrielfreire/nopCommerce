@@ -1,0 +1,21 @@
+
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: nopcommerce-gateway
+  namespace: nopcommerce
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "www.lonekings.tk"
+    - "lonekings.tk"
+    - "boltz.lonekings.tk"
+    - "watchsix.lonekings.tk"
+    # tls:
+    #   httpsRedirect: true
