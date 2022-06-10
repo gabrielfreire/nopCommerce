@@ -17,5 +17,6 @@ spec:
     - "lonekings.tk"
     - "boltz.lonekings.tk"
     - "watchsix.lonekings.tk"
+    - "fixit.lonekings.tk"
     # tls:
     #   httpsRedirect: true
