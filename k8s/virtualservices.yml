@@ -5,7 +5,7 @@ metadata:
   namespace: nopcommerce
 spec:
   hosts:
-  - "fixit.lonekings.net"
+  - "fixit.ofreire.com"
   gateways:
   - nopcommerce-gateway
   http:
@@ -22,7 +22,7 @@ metadata:
   namespace: nopcommerce
 spec:
   hosts:
-  - "boltz.lonekings.net"
+  - "boltz.ofreire.com"
   gateways:
   - nopcommerce-gateway
   http:
@@ -39,8 +39,8 @@ metadata:
   namespace: nopcommerce
 spec:
   hosts:
-  - "www.lonekings.net"
-  - "lonekings.net"
+  - "www.ofreire.com"
+  - "ofreire.com"
   gateways:
   - nopcommerce-gateway
   http:
@@ -57,7 +57,7 @@ metadata:
   namespace: nopcommerce
 spec:
   hosts:
-  - "watchsix.lonekings.net"
+  - "watchsix.ofreire.com"
   gateways:
   - nopcommerce-gateway
   http:

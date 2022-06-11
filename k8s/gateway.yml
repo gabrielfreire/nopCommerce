@@ -13,10 +13,10 @@ spec:
       name: http
       protocol: HTTP
     hosts:
-    - "www.lonekings.net"
-    - "lonekings.net"
-    - "boltz.lonekings.net"
-    - "watchsix.lonekings.net"
-    - "fixit.lonekings.net"
+    - "www.ofreire.com"
+    - "ofreire.com"
+    - "boltz.ofreire.com"
+    - "watchsix.ofreire.com"
+    - "fixit.ofreire.com"
     # tls:
     #   httpsRedirect: true
