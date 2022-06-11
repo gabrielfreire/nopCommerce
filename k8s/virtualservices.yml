@@ -5,7 +5,7 @@ metadata:
   namespace: nopcommerce
 spec:
   hosts:
-  - "fixit.lonekings.tk"
+  - "fixit.lonekings.net"
   gateways:
   - nopcommerce-gateway
   http:
@@ -22,7 +22,7 @@ metadata:
   namespace: nopcommerce
 spec:
   hosts:
-  - "boltz.lonekings.tk"
+  - "boltz.lonekings.net"
   gateways:
   - nopcommerce-gateway
   http:
@@ -39,8 +39,8 @@ metadata:
   namespace: nopcommerce
 spec:
   hosts:
-  - "www.lonekings.tk"
-  - "lonekings.tk"
+  - "www.lonekings.net"
+  - "lonekings.net"
   gateways:
   - nopcommerce-gateway
   http:
@@ -57,7 +57,7 @@ metadata:
   namespace: nopcommerce
 spec:
   hosts:
-  - "watchsix.lonekings.tk"
+  - "watchsix.lonekings.net"
   gateways:
   - nopcommerce-gateway
   http:
