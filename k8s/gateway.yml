@@ -18,5 +18,18 @@ spec:
     - "boltz.ofreire.com"
     - "watchsix.ofreire.com"
     - "fixit.ofreire.com"
-    # tls:
-    #   httpsRedirect: true
+    tls:
+      httpsRedirect: true
+  - port:
+      number: 443
+      name: https-ofreire-tls
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE
+      credentialName: ofreire-tls-cert
+    hosts:
+    - "www.ofreire.com"
+    - "ofreire.com"
+    - "boltz.ofreire.com"
+    - "watchsix.ofreire.com"
+    - "fixit.ofreire.com"
