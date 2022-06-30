@@ -1,0 +1,18 @@
+
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: ofreire-letsencrypt-issuer
+  namespace: istio-system
+spec:
+  acme:
+    email: ofreirelimited@gmail.com
+    server: https://acme-v02.api.letsencrypt.org/directory
+    preferredChain: "ISRG Root X1"
+    privateKeySecretRef:
+      # Secret resource that will be used to store the account's private key.
+      name: ofreire-issuer-account-key
+    solvers:
+    - http01:
+       ingress:
+         class: istio

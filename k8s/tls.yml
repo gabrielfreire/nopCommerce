@@ -7,7 +7,7 @@ spec:
   secretName: ofreire-tls-cert
   commonName: ofreire.com
   issuerRef:
-    name: letsencrypt-issuer
+    name: ofreire-letsencrypt-issuer
   dnsNames:
   - ofreire.com
   - www.ofreire.com
