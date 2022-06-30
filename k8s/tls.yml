@@ -1,0 +1,16 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: ofreire-tls-cert
+  namespace: istio-system
+spec:
+  secretName: ofreire-tls-cert
+  commonName: ofreire.com
+  issuerRef:
+    name: letsencrypt-issuer
+  dnsNames:
+  - ofreire.com
+  - www.ofreire.com
+  - watchsix.ofreire.com
+  - boltz.ofreire.com
+  - fixit.ofreire.com
