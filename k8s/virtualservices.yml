@@ -58,6 +58,7 @@ metadata:
 spec:
   hosts:
   - "watchsix.ofreire.com"
+  - "intwatchsix.ofreire.io"
   gateways:
   - nopcommerce-gateway
   http:
