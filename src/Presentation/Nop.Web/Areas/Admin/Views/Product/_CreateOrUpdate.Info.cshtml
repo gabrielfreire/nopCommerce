@@ -19,14 +19,12 @@
     $(document).ready(function() {
         @if (!Model.IsLoggedInAsVendor)
         {
-            <text>$("#@Html.IdFor(model => model.ShowOnHomepage)").click(toggleShowOnHomepage);</text>
+            <text>
+            $("#@Html.IdFor(model => model.ShowOnHomepage)").click(toggleShowOnHomepage);
+            toggleShowOnHomepage();
+            </text>
         }
         $("#@Html.IdFor(model => model.ProductTypeId)").change(toggleProductType);
-
-        @if (!Model.IsLoggedInAsVendor)
-        {
-            <text>toggleShowOnHomepage();</text>
-        }
         toggleProductType();
     });
 
@@ -60,7 +58,11 @@
             $('#group-required-other-products').hideElement();
             $('#group-visible-individually').hideElement();
             $('#group-associated-products').showElement();
-            updateTableWidth('#associatedproducts-grid');
+
+            @if (Model.Id > 0)
+            {
+                <text>updateTableWidth('#associatedproducts-grid');</text>
+            }
 
             $('#@Html.IdFor(model => model.VisibleIndividually)').prop('checked', true);
             
@@ -522,7 +524,7 @@
                     </script>
                 </div>
                 <div class="col-md-8">
-                    @await Component.InvokeAsync("AclDisabledWarning")
+                    @await Component.InvokeAsync(typeof(AclDisabledWarningViewComponent))
                 </div>
             </div>
         </div>
@@ -558,7 +560,7 @@
                     </script>
                 </div>
                 <div class="col-md-8">
-                    @await Component.InvokeAsync("MultistoreDisabledWarning")
+                    @await Component.InvokeAsync(typeof(MultistoreDisabledWarningViewComponent))
                 </div>
             </div>
         </div>
