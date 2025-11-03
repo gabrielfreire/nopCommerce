@@ -1,55 +1,55 @@
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: fixit-store-vs
-  namespace: nopcommerce
-spec:
-  hosts:
-  - "fixit.ofreire.com"
-  gateways:
-  - nopcommerce-gateway
-  http:
-  - route:
-    - destination:
-        host: nopcommerce-service.nopcommerce.svc.cluster.local
-        port:
-          number: 4480
----
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: boltz-store-vs
-  namespace: nopcommerce
-spec:
-  hosts:
-  - "boltz.ofreire.com"
-  gateways:
-  - nopcommerce-gateway
-  http:
-  - route:
-    - destination:
-        host: nopcommerce-service.nopcommerce.svc.cluster.local
-        port:
-          number: 4480
----
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: main-store-vs
-  namespace: nopcommerce
-spec:
-  hosts:
-  - "www.ofreire.com"
-  - "ofreire.com"
-  gateways:
-  - nopcommerce-gateway
-  http:
-  - route:
-    - destination:
-        host: nopcommerce-service.nopcommerce.svc.cluster.local
-        port:
-          number: 4480
----
+# apiVersion: networking.istio.io/v1alpha3
+# kind: VirtualService
+# metadata:
+#   name: fixit-store-vs
+#   namespace: nopcommerce
+# spec:
+#   hosts:
+#   - "fixit.ofreire.com"
+#   gateways:
+#   - nopcommerce-gateway
+#   http:
+#   - route:
+#     - destination:
+#         host: nopcommerce-service.nopcommerce.svc.cluster.local
+#         port:
+#           number: 4480
+# ---
+# apiVersion: networking.istio.io/v1alpha3
+# kind: VirtualService
+# metadata:
+#   name: boltz-store-vs
+#   namespace: nopcommerce
+# spec:
+#   hosts:
+#   - "boltz.ofreire.com"
+#   gateways:
+#   - nopcommerce-gateway
+#   http:
+#   - route:
+#     - destination:
+#         host: nopcommerce-service.nopcommerce.svc.cluster.local
+#         port:
+#           number: 4480
+# ---
+# apiVersion: networking.istio.io/v1alpha3
+# kind: VirtualService
+# metadata:
+#   name: main-store-vs
+#   namespace: nopcommerce
+# spec:
+#   hosts:
+#   - "www.ofreire.com"
+#   - "ofreire.com"
+#   gateways:
+#   - nopcommerce-gateway
+#   http:
+#   - route:
+#     - destination:
+#         host: nopcommerce-service.nopcommerce.svc.cluster.local
+#         port:
+#           number: 4480
+# ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
@@ -58,7 +58,6 @@ metadata:
 spec:
   hosts:
   - "watchsix.ofreire.com"
-  - "intwatchsix.ofreire.io"
   gateways:
   - nopcommerce-gateway
   http:

@@ -9,8 +9,6 @@ spec:
   issuerRef:
     name: ofreire-letsencrypt-issuer
   dnsNames:
-  - ofreire.com
-  - www.ofreire.com
   - watchsix.ofreire.com
-  - boltz.ofreire.com
-  - fixit.ofreire.com
+  - www.ofreire.com
+  - ofreire.com

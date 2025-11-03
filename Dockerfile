@@ -61,12 +61,14 @@ WORKDIR /app/published
 
 RUN mkdir logs
 RUN mkdir bin
+RUN mkdir Plugins
 
 RUN chmod 775 App_Data/
 RUN chmod 775 App_Data/DataProtectionKeys
 RUN chmod 775 bin
 RUN chmod 775 logs
 RUN chmod 775 Plugins
+RUN chmod 775 wwwroot/sitemaps
 RUN chmod 775 wwwroot/bundles
 RUN chmod 775 wwwroot/db_backups
 RUN chmod 775 wwwroot/files/exportimport
@@ -76,7 +78,7 @@ RUN chmod 775 wwwroot/images/thumbs
 RUN chmod 775 wwwroot/images/uploaded
 
 # create the runtime instance 
-FROM mcr.microsoft.com/dotnet/aspnet:7.0-focal AS runtime 
+FROM mcr.microsoft.com/dotnet/aspnet:7.0-jammy AS runtime 
 
 # add globalization support
 # alpine

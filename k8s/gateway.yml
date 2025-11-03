@@ -13,12 +13,7 @@ spec:
       name: http
       protocol: HTTP
     hosts:
-    - "www.ofreire.com"
-    - "ofreire.com"
-    - "boltz.ofreire.com"
     - "watchsix.ofreire.com"
-    - "intwatchsix.ofreire.io"
-    - "fixit.ofreire.com"
     # tls:
     #   httpsRedirect: true
   - port:
@@ -29,8 +24,4 @@ spec:
       mode: SIMPLE
       credentialName: ofreire-tls-cert
     hosts:
-    - "www.ofreire.com"
-    - "ofreire.com"
-    - "boltz.ofreire.com"
     - "watchsix.ofreire.com"
-    - "fixit.ofreire.com"
