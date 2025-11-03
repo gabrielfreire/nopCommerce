@@ -108,34 +108,44 @@ var Checkout = {
 
 var Billing = {
   form: false,
-  saveUrl: false,
+  getAddressUrl: '',
+  saveUrl: '',
   disableBillingAddressCheckoutStep: false,
   guest: false,
-  selectedStateId: 0,
+  selectedStateId: 0,  
 
-  init: function(form, saveUrl, disableBillingAddressCheckoutStep, guest) {
-    this.form = form;
+  init: function (form, getAddressUrl, saveUrl, disableBillingAddressCheckoutStep, guest) {
+    this.form = form;    
+    this.getAddressUrl = getAddressUrl;
     this.saveUrl = saveUrl;
     this.disableBillingAddressCheckoutStep = disableBillingAddressCheckoutStep;
     this.guest = guest;
   },
 
-  newAddress: function(isNew) { 
+  newAddress: function (isNew) {
     $('#save-billing-address-button').hide();
 
     if (isNew) {
       $('#billing-new-address-form').show();
       $('#edit-billing-address-button').hide();
       $('#delete-billing-address-button').hide();
-    } else {
+    } else {      
       $('#billing-new-address-form').hide();
       $('#edit-billing-address-button').show();
       $('#delete-billing-address-button').show();
     }
     $(document).trigger({ type: "onepagecheckout_billing_address_new" });
     Billing.initializeCountrySelect();
+
+    if (isNew)
+      Billing.editAddress();
   },
 
+  setDefaultCountry: function (defaultCountry) {
+    $('#opc-billing select[data-trigger="country-select"] option[value="' + defaultCountry + '"]').prop('selected', true);
+    $('#opc-billing select[data-trigger="country-select"] option:selected').change()
+  },
+  
   resetSelectedAddress: function() {
     var selectElement = $('#billing-address-select');
     if (selectElement) {
@@ -199,16 +209,16 @@ var Billing = {
     }
   },
 
-  editAddress: function(url) {
+  editAddress: function() {
     Billing.resetBillingForm();
-    //Billing.initializeStateSelect();
 
     var prefix = 'BillingNewAddress_';
     var selectedItem = $('#billing-address-select').children("option:selected").val();
+
     $.ajax({
       cache: false,
       type: "GET",
-      url: url,
+      url: this.getAddressUrl,
       data: {
         addressId: selectedItem,
       },
@@ -251,7 +261,9 @@ var Billing = {
         $("#billing-new-address-form").show();
         $("#edit-billing-address-button").hide();
         $("#delete-billing-address-button").hide();
-        $("#save-billing-address-button").show();
+        if (selectedItem != 0) {
+          $("#save-billing-address-button").show();
+        }
       },
       error: Checkout.ajaxFailure,
     });
@@ -700,14 +712,16 @@ var PaymentInfo = {
 
 
 var ConfirmOrder = {
-    form: false,
+    form: false,    
     saveUrl: false,
     isSuccess: false,
     isCaptchaEnabled: false,
     isReCaptchaV3: false,
     recaptchaPublicKey: "",
+    div: false,
 
-    init: function (saveUrl, successUrl, isCaptchaEnabled, isReCaptchaV3, recaptchaPublicKey) {
+  init: function (saveUrl, successUrl, isCaptchaEnabled, isReCaptchaV3, recaptchaPublicKey, div) {
+        this.div = div;
         this.saveUrl = saveUrl;
         this.successUrl = successUrl;
         this.isCaptchaEnabled = isCaptchaEnabled;
@@ -761,12 +775,11 @@ var ConfirmOrder = {
                     recaptchaToken = token;
                 });
             });
+            while (recaptchaToken == '') {
+              await new Promise(t => setTimeout(t, 100));
+            }
         } else {
-            recaptchaToken = grecaptcha.getResponse();
-        }
-
-        while (recaptchaToken == '') {
-            await new Promise(t => setTimeout(t, 100));
+          recaptchaToken = $(this.div).find('.captcha-box textarea[name="g-recaptcha-response"]').val();
         }
 
         return recaptchaToken;

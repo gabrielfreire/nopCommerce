@@ -1,26 +1,35 @@
 ﻿@model List<string>
-<select asp-for="@Model" asp-items="@((IEnumerable<SelectListItem>)ViewData["SelectList"])"></select>
+
+@{
+    var htmlAttributes = ViewData["htmlAttributes"] as Dictionary<string, object> ?? new();
+
+    htmlAttributes.TryAdd("class", "form-control select2");
+    htmlAttributes.TryAdd("style", "width: 100%;");
+    htmlAttributes.TryAdd("data-dropdown-css-class", "select2-blue");
+    htmlAttributes.TryAdd("multiple", "multiple");
+}
+
+<div class="select2-blue">
+    @Html.ListBox("", ViewData["SelectList"] as IEnumerable<SelectListItem>, htmlAttributes)
+</div>
+
 <script>
-    $(document).ready(function () {
-        $("#@Html.IdForModel()").kendoMultiSelect({
-            select: function (e) {
-                var current = this.value();
+    $(function() {
+        $("#@Html.IdForModel()").select2({
+            tags: true,
+            createTag: function(params) {
+                const term = $.trim(params.term);
 
-                if (this.dataSource.view()[e.item.index()].value.trim() == '') {
-                    this.value("");
+                if (term === '') {
+                    return null;
                 }
-                else if (current.indexOf("0") !== -1) {
-                    current = $.grep(current, function (value) {
-                        return value.trim() !== '';
-                    });
 
-                    this.value(current);
+                return {
+                    id: term,
+                    text: term,
+                    newTag: true
                 }
-            },
-            change: function (e) {
-                if (this.value().length === 0)
-                    this.value([""]);
             }
-        }).data("kendoMultiSelect");
+        })
     });
 </script>
